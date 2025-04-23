@@ -1,0 +1,11 @@
+{
+	"id": "purple-fox-notes",
+	"name": "Purple Fox Notes",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "A stylish theme",
+	"author": "Yahya Izadi",
+	"authorUrl": "https://github.com/yahaiz",
+	"fundingUrl": "https://www.instagram.com/yahizadi/",
+	"isDesktopOnly": true
+}
