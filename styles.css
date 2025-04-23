@@ -1,0 +1,269 @@
+:root {
+    --radius-s: 4px;
+    --radius-m: 8px;
+    --radius-l: 12px;
+    --radius-xl: 16px;
+    --radius-xxl: 24px;
+    --radius-xxxl: 32px;
+
+    --color-red-rgb: 208, 66, 85;
+    --color-orange-rgb: 213, 118, 63;
+    --color-yellow-rgb: 229, 181, 103;
+    --color-green-rgb: 168, 195, 115;
+    --color-cyan-rgb: 115, 187, 178;
+    --color-blue-rgb: 108, 153, 187;
+    --color-purple-rgb: 158, 134, 200;
+    --color-pink-rgb: 176, 82, 121;
+    --color-red: #d04255;
+    --color-orange: #d5763f;
+    --color-yellow: #e5b567;
+    --color-green: #a8c373;
+    --color-cyan: #73bbb2;
+    --color-blue: #6c99bb;
+    --color-purple: #9e86c8;
+    --color-pink: #b05279;
+}
+
+
+/* Code block */
+body {
+    --code-radius: var(--radius-xxl);
+}
+
+code {
+    --code-radius: 0;
+}
+
+pre {
+    direction: ltr !important;
+}
+
+
+/* HTML block*/
+.cm-html-embed.cm-embed-block:hover {
+    border-radius: 0 !important;
+    box-shadow: 0 0 0 !important;
+}
+
+
+p:has(.image-embed:not([alt*="left"]):not([alt*="right"])) {
+    text-align: center;
+}
+/* image */
+
+
+img {
+    border-radius: var(--radius-xl);
+    float: none;
+}
+
+img[alt*="left"] {
+    float: left;
+    margin-right: 1rem;
+}
+
+img[alt*="right"] {
+    float: right;
+    margin-left: 1rem;
+}
+
+img[alt*="no-radius"] {
+    border-radius: 0;
+}
+
+
+
+/* Callout */
+
+.callout {
+    --callout-radius: var(--radius-xxl);
+    --callout-padding: var(--size-4-4) var(--size-4-5);
+    
+    page-break-inside: avoid;
+}
+
+.theme-light .callout {
+    border-left: 6px solid rgba(255, 255, 255, 0.5);
+}
+
+.theme-dark .callout {
+    border-left: 6px solid rgb(0, 0, 0, 0.1);
+}
+
+.callout.notitle {
+    --callout-padding: 0 var(--size-4-5);
+}
+
+.callout.notitle .callout-title {
+    display: none !important;
+}
+
+
+.cm-embed-block.cm-callout {
+    border-radius: var(--radius-xxl) !important;
+    transition: 0.3s box-shadow;
+}
+
+.callout-title {
+    --callout-title-padding: var(--size-4-3) var(--size-4-5);
+    width: calc(100%);
+    border-radius: var(--radius-xl);
+}
+
+.theme-light .callout-title {
+    background-color: var(--background-primary);
+}
+
+.theme-dark .callout-title {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.edit-block-button {
+    display: none !important;
+}
+
+.cm-formatting.cm-formatting-quote.cm-formatting-quote-1.cm-hmd-callout.cm-quote.cm-quote-1 {
+    color: var(--interactive-accent);
+}
+
+.callout[dir="rtl"] .callout-title-inner>svg {
+    transform: scaleX(-1);
+}
+
+/* PFox Notes Callouts */
+
+.callout[data-callout="example"] {
+    --callout-color: var(--color-purple-rgb);
+    --callout-icon: "sparkles";
+}
+
+.callout[data-callout="definition"] {
+    --callout-color: var(--color-pink-rgb);
+    --callout-icon: "book-open";
+}
+
+.callout[data-callout="recall"] {
+    --callout-color: var(--color-orange-rgb);
+    --callout-icon: "file-clock";
+}
+
+.callout[data-callout="proof"] {
+    --callout-color: var(--color-green-rgb);
+    --callout-icon: "check-square";
+}
+
+.callout[data-callout="theorem"] {
+    --callout-color: var(--color-cyan-rgb);
+    --callout-icon: "book";
+}
+/* Table */
+
+.cm-embed-block.cm-table-widget.markdown-rendered {
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    text-align: center !important;
+    width: 100% !important;
+    direction: ltr !important;
+    /* width: 100vw !important; */
+}
+
+table * {
+    text-align: center !important;
+    border: none !important;
+}
+
+.theme-dark tbody tr {
+    border-top: 1px solid #333 !important;
+}
+
+.theme-light tbody tr {
+    border-top: 1px solid #ccc !important;
+}
+
+thead {
+    text-align: center;
+}
+
+th,
+td {
+    padding: 12px 20px;
+}
+
+th:first-child {
+    border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+}
+
+th:last-child {
+    border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
+}
+
+thead {
+    background-color: var(--background-secondary);
+}
+
+.theme-light .callout thead {
+    background-color: var(--background-primary);
+}
+
+.theme-dark .callout thead {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+tbody tr:first-child {
+    padding-top: 20px;
+    border-top: 0 !important;
+}
+
+
+
+/* PDF Export */
+.page-break, .line-break {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: 0.3s;
+    margin: var(--size-4-5) 0;
+}
+
+.page-break {
+    height: 35px;
+    border-bottom: 2px dashed var(--text-muted);
+    border-top: 2px dashed var(--text-muted);
+    background-color: var(--background-secondary);
+}
+
+.line-break {
+    height: 25px;
+    border-bottom: 2px dashed var(--text-muted);
+}
+
+.page-break::before {
+    content: "Page Break";
+    color: var(--text-muted);
+    font-size: var(--font-smaller);
+}
+
+.line-break::before {
+    content: "Line Break";
+    color: var(--text-muted);
+    font-size: var(--font-smaller);
+}
+
+@media print {
+    .page-break {
+        page-break-before: always;
+        width: 0;
+        height: 0px;
+        overflow: hidden;
+        padding-left: 0px;
+        border-bottom: 0px dashed white;
+        border-radius: 0 !important;
+    }
+}
+
