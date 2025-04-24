@@ -1,10 +1,6 @@
 :root {
     /* Base variables */
     --pfox-radius-multiplier: 1;
-    --page-break-height: var(--pfox-page-break-height, 35px);
-    --line-break-height: var(--pfox-line-break-height, 25px);
-    --page-break-color: var(--pfox-page-break-color, var(--text-muted));
-    --line-break-color: var(--pfox-line-break-color, var(--text-muted));
     
     /* Radius scales - calculated dynamically */
     --pfox-radius-s: calc(4px * var(--pfox-radius-multiplier));
@@ -221,15 +217,15 @@ tbody tr:first-child {
 }
 
 .page-break {
-    height: var(--page-break-height);
-    border-bottom: 2px dashed var(--page-break-color);
-    border-top: 2px dashed var(--page-break-color);
+    height: 35px;
+    border-bottom: 2px dashed var(--text-muted);
+    border-top: 2px dashed var(--text-muted);
     background-color: var(--background-secondary);
 }
 
 .line-break {
-    height: var(--line-break-height);
-    border-bottom: 2px dashed var(--line-break-color);
+    height: 25px;
+    border-bottom: 2px dashed var(--text-muted);
 }
 
 .page-break::before {

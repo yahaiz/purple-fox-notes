@@ -34,7 +34,7 @@ export default class PurpleFoxPlugin extends Plugin {
             editorCallback: async (editor: Editor) => {
                 const maybeView = this.app.workspace.getActiveViewOfType(MarkdownView);
                 if (maybeView?.editor) {
-                    maybeView.editor.replaceSelection('\n::: page-break\n:::\n\n');
+                    maybeView.editor.replaceSelection('\n<div class="page-break"></div>\n\n');
                 }
             }
         });
@@ -45,7 +45,7 @@ export default class PurpleFoxPlugin extends Plugin {
             editorCallback: async (editor: Editor) => {
                 const maybeView = this.app.workspace.getActiveViewOfType(MarkdownView);
                 if (maybeView?.editor) {
-                    maybeView.editor.replaceSelection('\n::: line-break\n:::\n\n');
+                    maybeView.editor.replaceSelection('\n<div class="line-break"></div>\n\n');
                 }
             }
         });
@@ -124,14 +124,14 @@ export default class PurpleFoxPlugin extends Plugin {
                 this.pageBreakIcon = this.addRibbonIcon('lucide-file-plus', 'Insert Page Break', async () => {
                     const maybeView = this.app.workspace.getActiveViewOfType(MarkdownView);
                     if (maybeView?.editor) {
-                        maybeView.editor.replaceSelection('\n::: page-break\n:::\n\n');
+                        maybeView.editor.replaceSelection('\n<div class="page-break"></div>\n\n');
                     }
                 });
 
                 this.lineBreakIcon = this.addRibbonIcon('lucide-minus', 'Insert Line Break', async () => {
                     const maybeView = this.app.workspace.getActiveViewOfType(MarkdownView);
                     if (maybeView?.editor) {
-                        maybeView.editor.replaceSelection('\n::: line-break\n:::\n\n');
+                        maybeView.editor.replaceSelection('\n<div class="line-break"></div>\n\n');
                     }
                 });
             }
