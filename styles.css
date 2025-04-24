@@ -1,35 +1,37 @@
 :root {
-    --radius-s: 4px;
-    --radius-m: 8px;
-    --radius-l: 12px;
-    --radius-xl: 16px;
-    --radius-xxl: 24px;
-    --radius-xxxl: 32px;
-
-    --color-red-rgb: 208, 66, 85;
-    --color-orange-rgb: 213, 118, 63;
-    --color-yellow-rgb: 229, 181, 103;
-    --color-green-rgb: 168, 195, 115;
-    --color-cyan-rgb: 115, 187, 178;
-    --color-blue-rgb: 108, 153, 187;
-    --color-purple-rgb: 158, 134, 200;
-    --color-pink-rgb: 176, 82, 121;
-    --color-red: #d04255;
-    --color-orange: #d5763f;
-    --color-yellow: #e5b567;
-    --color-green: #a8c373;
-    --color-cyan: #73bbb2;
-    --color-blue: #6c99bb;
-    --color-purple: #9e86c8;
-    --color-pink: #b05279;
+    /* Base variables */
+    --pfox-radius-multiplier: 1;
+    --page-break-height: var(--pfox-page-break-height, 35px);
+    --line-break-height: var(--pfox-line-break-height, 25px);
+    --page-break-color: var(--pfox-page-break-color, var(--text-muted));
+    --line-break-color: var(--pfox-line-break-color, var(--text-muted));
+    
+    /* Radius scales - calculated dynamically */
+    --pfox-radius-s: calc(4px * var(--pfox-radius-multiplier));
+    --pfox-radius-m: calc(8px * var(--pfox-radius-multiplier));
+    --pfox-radius-l: calc(12px * var(--pfox-radius-multiplier));
+    --pfox-radius-xl: calc(16px * var(--pfox-radius-multiplier));
+    --pfox-radius-xxl: calc(24px * var(--pfox-radius-multiplier));
+    --pfox-radius-xxxl: calc(32px * var(--pfox-radius-multiplier));
+    --pfox-system-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
+/* Font type variations */
+[data-font-type="system"] {
+    font-family: var(--pfox-system-font);
+}
 
-/* Code block */
+[data-font-type="custom"] {
+    font-family: var(--pfox-system-font);
+}
+
+/* Base styles */
 body {
-    --code-radius: var(--radius-xxl);
+    --code-radius: var(--pfox-radius-xxl);
+    font-family: var(--pfox-system-font);
 }
 
+/* Code blocks */
 code {
     --code-radius: 0;
 }
@@ -38,22 +40,19 @@ pre {
     direction: ltr !important;
 }
 
-
-/* HTML block*/
+/* HTML blocks */
 .cm-html-embed.cm-embed-block:hover {
     border-radius: 0 !important;
     box-shadow: 0 0 0 !important;
 }
 
-
+/* Images */
 p:has(.image-embed:not([alt*="left"]):not([alt*="right"])) {
     text-align: center;
 }
-/* image */
-
 
 img {
-    border-radius: var(--radius-xl);
+    border-radius: var(--pfox-radius-xl);
     float: none;
 }
 
@@ -71,14 +70,10 @@ img[alt*="no-radius"] {
     border-radius: 0;
 }
 
-
-
-/* Callout */
-
+/* Callouts */
 .callout {
-    --callout-radius: var(--radius-xxl);
+    --callout-radius: var(--pfox-radius-xxl);
     --callout-padding: var(--size-4-4) var(--size-4-5);
-    
     page-break-inside: avoid;
 }
 
@@ -98,16 +93,15 @@ img[alt*="no-radius"] {
     display: none !important;
 }
 
-
 .cm-embed-block.cm-callout {
-    border-radius: var(--radius-xxl) !important;
+    border-radius: var(--pfox-radius-xxl) !important;
     transition: 0.3s box-shadow;
 }
 
 .callout-title {
     --callout-title-padding: var(--size-4-3) var(--size-4-5);
     width: calc(100%);
-    border-radius: var(--radius-xl);
+    border-radius: var(--pfox-radius-xl);
 }
 
 .theme-light .callout-title {
@@ -130,8 +124,7 @@ img[alt*="no-radius"] {
     transform: scaleX(-1);
 }
 
-/* PFox Notes Callouts */
-
+/* Custom Callouts */
 .callout[data-callout="example"] {
     --callout-color: var(--color-purple-rgb);
     --callout-icon: "sparkles";
@@ -156,8 +149,8 @@ img[alt*="no-radius"] {
     --callout-color: var(--color-cyan-rgb);
     --callout-icon: "book";
 }
-/* Table */
 
+/* Tables */
 .cm-embed-block.cm-table-widget.markdown-rendered {
     display: flex;
     justify-content: center;
@@ -167,7 +160,6 @@ table {
     text-align: center !important;
     width: 100% !important;
     direction: ltr !important;
-    /* width: 100vw !important; */
 }
 
 table * {
@@ -185,6 +177,7 @@ table * {
 
 thead {
     text-align: center;
+    background-color: var(--background-secondary);
 }
 
 th,
@@ -193,15 +186,11 @@ td {
 }
 
 th:first-child {
-    border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+    border-radius: var(--pfox-radius-xl) 0 0 var(--pfox-radius-xl);
 }
 
 th:last-child {
-    border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
-}
-
-thead {
-    background-color: var(--background-secondary);
+    border-radius: 0 var(--pfox-radius-xl) var(--pfox-radius-xl) 0;
 }
 
 .theme-light .callout thead {
@@ -217,8 +206,6 @@ tbody tr:first-child {
     border-top: 0 !important;
 }
 
-
-
 /* PDF Export */
 .page-break, .line-break {
     width: 100%;
@@ -229,41 +216,75 @@ tbody tr:first-child {
     position: relative;
     transition: 0.3s;
     margin: var(--size-4-5) 0;
+    color: var(--text-muted);
+    font-size: var(--font-smaller);
 }
 
 .page-break {
-    height: 35px;
-    border-bottom: 2px dashed var(--text-muted);
-    border-top: 2px dashed var(--text-muted);
+    height: var(--page-break-height);
+    border-bottom: 2px dashed var(--page-break-color);
+    border-top: 2px dashed var(--page-break-color);
     background-color: var(--background-secondary);
 }
 
 .line-break {
-    height: 25px;
-    border-bottom: 2px dashed var(--text-muted);
+    height: var(--line-break-height);
+    border-bottom: 2px dashed var(--line-break-color);
 }
 
 .page-break::before {
     content: "Page Break";
-    color: var(--text-muted);
-    font-size: var(--font-smaller);
 }
 
 .line-break::before {
     content: "Line Break";
-    color: var(--text-muted);
-    font-size: var(--font-smaller);
 }
 
 @media print {
     .page-break {
         page-break-before: always;
         width: 0;
-        height: 0px;
+        height: 0;
         overflow: hidden;
-        padding-left: 0px;
-        border-bottom: 0px dashed white;
-        border-radius: 0 !important;
+        padding: 0;
+        border: 0;
+        margin: 0;
     }
 }
 
+/* Settings visibility states */
+.extra-setting-button.is-hidden {
+    visibility: hidden;
+}
+
+.extra-setting-button.is-visible {
+    visibility: visible;
+}
+
+.extra-setting-button[data-visible="false"] {
+    visibility: hidden;
+}
+
+.extra-setting-button[data-visible="true"] {
+    visibility: visible;
+}
+
+/* Settings Controls */
+.setting-item-control {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.extra-setting-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.extra-setting-button:hover {
+    opacity: 1;
+}

@@ -112,7 +112,6 @@ Note: When using aligned images, always insert a line break after the image, wit
 ![Combining Options Example](./docs/screenshots/combining.png)
 
 ### Additional Style Enhancements
-- Better Persian text support with [Vazirmatn font](https://github.com/rastikerdar/vazirmatn)
 - Customizable border radius for UI elements
 - Beautiful table styling with centered content and rounded corners
 - Responsive and clean design for both light and dark themes
@@ -127,8 +126,6 @@ The plugin settings allow you to customize:
   - Toggle visibility of line break ribbon icon
 - **Border Radius Settings**
   - Adjust the size of all border radiuses (0 = no radius, 1 = default, 1.5 = maximum)
-- **Font Settings**
-  - Enable/disable Vazirmatn font for better Persian text display
 
 ## License
 
