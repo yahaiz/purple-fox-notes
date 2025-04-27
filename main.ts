@@ -68,13 +68,19 @@ export default class PurpleFoxPlugin extends Plugin {
                 this.settings.radiusMultiplier = currentValue;
                 this.saveSettings();
             }
-            
+
             // Round to one decimal place and bound between 0 and 1.5
             const boundedValue = Math.min(Math.max(Math.round(currentValue * 10) / 10, 0), 1.5);
-            
-            // Update using CSS custom property
-            document.documentElement.style.setProperty('--pfox-radius-multiplier', boundedValue.toString());
-            
+
+            // Dynamically create or update a <style> block for the CSS property
+            let styleElement = document.getElementById('pfox-dynamic-styles') as HTMLStyleElement;
+            if (!styleElement) {
+                styleElement = document.createElement('style');
+                styleElement.id = 'pfox-dynamic-styles';
+                document.head.appendChild(styleElement);
+            }
+            styleElement.textContent = `:root { --pfox-radius-multiplier: ${boundedValue}; }`;
+
             // Update settings if the value changed after validation
             if (boundedValue !== this.settings.radiusMultiplier) {
                 this.settings.radiusMultiplier = boundedValue;
@@ -99,12 +105,15 @@ export default class PurpleFoxPlugin extends Plugin {
         if (this.lineBreakIcon) {
             this.lineBreakIcon.remove();
         }
-        
+
         // Stop observing callouts
         this.calloutProcessor?.stopObserving();
 
-        // Clean up by removing CSS custom property
-        document.documentElement.style.removeProperty('--pfox-radius-multiplier');
+        // Clean up by removing the dynamically created <style> block
+        const styleElement = document.getElementById('pfox-dynamic-styles');
+        if (styleElement) {
+            styleElement.remove();
+        }
     }
 
     private updateRibbonIcon(): void {
