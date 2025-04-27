@@ -21,6 +21,12 @@ export interface PurpleFoxSettings {
     largeImageWidth: string;
     showWatermark: boolean;
     watermarkText: string;
+    // TOC Settings
+    enableAutoTOC: boolean;
+    tocTitle: string;
+    tocMaxLevel: number;
+    tocMinLevel: number;
+    tocListStyle: 'bullet' | 'number';
 }
 
 export const DEFAULT_SETTINGS: PurpleFoxSettings = {
@@ -45,5 +51,11 @@ export const DEFAULT_SETTINGS: PurpleFoxSettings = {
     mediumImageWidth: "400px",
     largeImageWidth: "800px",
     showWatermark: false,
-    watermarkText: "CONFIDENTIAL"
+    watermarkText: "CONFIDENTIAL",
+    // TOC Default Settings
+    enableAutoTOC: false,
+    tocTitle: "Table of Contents",
+    tocMaxLevel: 3,
+    tocMinLevel: 1,
+    tocListStyle: 'bullet'
 }

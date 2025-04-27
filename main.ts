@@ -2,25 +2,23 @@ import { Editor, MarkdownView, Plugin } from 'obsidian';
 import { PurpleFoxSettings, DEFAULT_SETTINGS } from './src/settings';
 import { CalloutProcessor } from './src/calloutProcessor';
 import { FoxSettingTab } from './src/settingsTab';
+import { TOCProcessor } from './src/tocProcessor';
 
 export default class PurpleFoxPlugin extends Plugin {
     settings: PurpleFoxSettings;
     private pageBreakIcon: HTMLElement | null = null;
     private lineBreakIcon: HTMLElement | null = null;
+    private tocProcessor: TOCProcessor;
     private calloutProcessor: CalloutProcessor;
 
     async onload() {
         await this.loadSettings();
+        this.tocProcessor = new TOCProcessor(this.settings);
+        
         this.registerEditorExtension();
         this.registerCommands();
-        
-        // Initialize styles immediately after loading settings
-        this.updateStyles();
-        
-        this.app.workspace.onLayoutReady(() => {
-            this.setupUI();
-            this.setupCalloutProcessor();
-        });
+        this.setupUI();
+        this.setupCalloutProcessor();
     }
 
     public registerEditorExtension() {
@@ -49,6 +47,21 @@ export default class PurpleFoxPlugin extends Plugin {
                 }
             }
         });
+
+        // Add TOC command
+        this.addCommand({
+            id: 'insert-toc',
+            name: 'Insert Table of Contents',
+            editorCallback: async (editor: Editor) => {
+                const maybeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+                if (maybeView?.editor) {
+                    const cursor = editor.getCursor();
+                    const content = editor.getValue();
+                    const toc = this.tocProcessor.generateTOC(content);
+                    editor.replaceRange(toc, cursor);
+                }
+            }
+        });
     }
 
     private setupUI() {
@@ -71,20 +84,11 @@ export default class PurpleFoxPlugin extends Plugin {
 
             // Round to one decimal place and bound between 0 and 1.5
             const boundedValue = Math.min(Math.max(Math.round(currentValue * 10) / 10, 0), 1.5);
-
-            // Dynamically create or update a <style> block for the CSS property
-            let styleElement = document.getElementById('pfox-dynamic-styles') as HTMLStyleElement;
-            if (!styleElement) {
-                styleElement = document.createElement('style');
-                styleElement.id = 'pfox-dynamic-styles';
-                document.head.appendChild(styleElement);
-            }
             
-            // Update watermark settings
-            document.body.dataset.watermark = this.settings.showWatermark ? 'true' : 'false';
+            // Update CSS custom properties using documentElement
+            document.documentElement.style.setProperty('--pfox-radius-multiplier', boundedValue.toString());
             document.documentElement.style.setProperty('--pfox-watermark-text', `"${this.settings.watermarkText}"`);
-            
-            styleElement.textContent = `:root { --pfox-radius-multiplier: ${boundedValue}; }`;
+            document.body.dataset.watermark = this.settings.showWatermark ? 'true' : 'false';
 
             // Update settings if the value changed after validation
             if (boundedValue !== this.settings.radiusMultiplier) {
@@ -149,6 +153,17 @@ export default class PurpleFoxPlugin extends Plugin {
                     }
                 });
             }
+
+            // Add TOC icon
+            this.addRibbonIcon('list', 'Insert Table of Contents', async () => {
+                const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+                if (view?.editor) {
+                    const cursor = view.editor.getCursor();
+                    const content = view.editor.getValue();
+                    const toc = this.tocProcessor.generateTOC(content);
+                    view.editor.replaceRange(toc, cursor);
+                }
+            });
         } catch (error) {
             console.error('Error updating ribbon icons:', error);
         }

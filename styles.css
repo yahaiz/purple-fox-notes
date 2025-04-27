@@ -1,6 +1,7 @@
 :root {
     /* Base variables */
     --pfox-radius-multiplier: 1;
+    --pfox-watermark-text: "";
     
     /* Radius scales - calculated dynamically */
     --pfox-radius-s: calc(4px * var(--pfox-radius-multiplier));
@@ -10,6 +11,19 @@
     --pfox-radius-xxl: calc(24px * var(--pfox-radius-multiplier));
     --pfox-radius-xxxl: calc(32px * var(--pfox-radius-multiplier));
     --pfox-system-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Watermark styles */
+body[data-watermark="true"]::after {
+    content: var(--pfox-watermark-text);
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    opacity: var(--pfox-watermark-opacity, 0.15);
+    font-size: 14px;
+    color: var(--text-muted);
+    pointer-events: none;
+    z-index: 1000;
 }
 
 /* Font type variations */
@@ -237,41 +251,6 @@ tbody tr:first-child {
     content: "Line Break";
 }
 
-@media print {
-    .page-break {
-        page-break-before: always;
-        width: 0;
-        height: 0;
-        overflow: hidden;
-        padding: 0;
-        border: 0;
-        margin: 0;
-    }
-    .line-break {
-        width: 0;
-        height: 0;
-        overflow: hidden;
-        padding: 0;
-        border: 0;
-        margin: 0;
-    }
-
-    /* Watermark */
-    body[data-watermark="true"]::before {
-        content: var(--pfox-watermark-text, "CONFIDENTIAL");
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) rotate(-45deg);
-        font-size: 60px;
-        color: #000;
-        opacity: var(--pfox-watermark-opacity);
-        z-index: 1000;
-        pointer-events: none;
-        white-space: nowrap;
-    }
-}
-
 /* Settings visibility states */
 .extra-setting-button.is-hidden {
     visibility: hidden;
@@ -307,4 +286,87 @@ tbody tr:first-child {
 
 .extra-setting-button:hover {
     opacity: 1;
+}
+
+/* Enhanced Table of Contents Styles */
+.purple-fox-toc {
+    background-color: var(--background-primary);
+    border: 2px solid var(--background-modifier-border);
+    border-radius: var(--pfox-radius-xl);
+    padding: 2em;
+    margin: 1em auto;
+    position: relative;
+    font-size: 1.1em;
+}
+
+.theme-dark .purple-fox-toc {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.purple-fox-toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Base indentation for LTR */
+.purple-fox-toc ul ul {
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+/* Indentation for RTL */
+.purple-fox-toc[dir="rtl"] ul ul {
+    padding-right: 2em;
+    padding-left: 2em;
+}
+
+.purple-fox-toc li {
+    margin: 0.5em 0;
+    line-height: 1.4;
+    color: var(--text-normal);
+    position: relative;
+    display: flex;
+    gap: 0.5em;
+}
+
+/* Bullet positioning for LTR */
+.purple-fox-toc li::before {
+    content: attr(data-bullet);
+    color: var(--text-accent);
+    font-weight: 600;
+    min-width: 1.5em;
+    display: inline-block;
+}
+
+/* Bullet positioning for RTL */
+.purple-fox-toc[dir="rtl"] li {
+    flex-direction: row-reverse;
+}
+
+.purple-fox-toc[dir="rtl"] li::before {
+    text-align: left;
+}
+
+/* Title style */
+.markdown-preview-view h2:has(+ .purple-fox-toc) {
+    text-align: center;
+    margin: 2em 0 1em;
+    color: var(--text-accent);
+    font-size: 2em;
+    font-weight: 700;
+    border-bottom: none;
+}
+
+/* Print styles */
+@media print {
+    .purple-fox-toc {
+        box-shadow: none;
+        border: 1px solid #ccc;
+        break-after: page;
+    }
+    
+    .purple-fox-toc li {
+        break-inside: avoid;
+    }
 }
