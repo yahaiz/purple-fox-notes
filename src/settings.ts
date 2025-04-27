@@ -19,6 +19,8 @@ export interface PurpleFoxSettings {
     smallImageWidth: string;
     mediumImageWidth: string;
     largeImageWidth: string;
+    showWatermark: boolean;
+    watermarkText: string;
 }
 
 export const DEFAULT_SETTINGS: PurpleFoxSettings = {
@@ -41,5 +43,7 @@ export const DEFAULT_SETTINGS: PurpleFoxSettings = {
     defaultImagePosition: "left",
     smallImageWidth: "200px",
     mediumImageWidth: "400px",
-    largeImageWidth: "800px"
+    largeImageWidth: "800px",
+    showWatermark: false,
+    watermarkText: "CONFIDENTIAL"
 }

@@ -2,13 +2,6 @@ import { App, PluginSettingTab, Setting, setIcon } from 'obsidian';
 import PurpleFoxPlugin from '../main';
 
 export class FoxSettingTab extends PluginSettingTab {
-    plugin: PurpleFoxPlugin;
-
-    constructor(app: App, plugin: PurpleFoxPlugin) {
-        super(app, plugin);
-        this.plugin = plugin;
-    }
-
     display(): void {
         const { containerEl } = this;
         containerEl.empty();
@@ -82,5 +75,32 @@ export class FoxSettingTab extends PluginSettingTab {
                 }
                 return slider;
             });
+
+        // Watermark Settings
+        containerEl.createEl('h3', { text: 'PDF Export Watermark' });
+
+        new Setting(containerEl)
+            .setName("Show watermark")
+            .setDesc("Enable or disable watermark in PDF exports")
+            .addToggle(toggle =>
+                toggle
+                    .setValue(this.plugin.settings.showWatermark)
+                    .onChange(async (value) => {
+                        this.plugin.settings.showWatermark = value;
+                        await this.plugin.saveSettings();
+                    })
+            );
+
+        new Setting(containerEl)
+            .setName("Watermark text")
+            .setDesc("Text to display as watermark in PDF exports")
+            .addText(text => text
+                .setPlaceholder("CONFIDENTIAL")
+                .setValue(this.plugin.settings.watermarkText)
+                .onChange(async (value) => {
+                    this.plugin.settings.watermarkText = value;
+                    await this.plugin.saveSettings();
+                })
+            );
     }
 }

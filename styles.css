@@ -25,6 +25,7 @@
 body {
     --code-radius: var(--pfox-radius-xxl);
     font-family: var(--pfox-system-font);
+    --pfox-watermark-opacity: 0.15;
 }
 
 /* Code blocks */
@@ -245,6 +246,29 @@ tbody tr:first-child {
         padding: 0;
         border: 0;
         margin: 0;
+    }
+    .line-break {
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        padding: 0;
+        border: 0;
+        margin: 0;
+    }
+
+    /* Watermark */
+    body[data-watermark="true"]::before {
+        content: var(--pfox-watermark-text, "CONFIDENTIAL");
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-45deg);
+        font-size: 60px;
+        color: #000;
+        opacity: var(--pfox-watermark-opacity);
+        z-index: 1000;
+        pointer-events: none;
+        white-space: nowrap;
     }
 }
 

@@ -79,6 +79,11 @@ export default class PurpleFoxPlugin extends Plugin {
                 styleElement.id = 'pfox-dynamic-styles';
                 document.head.appendChild(styleElement);
             }
+            
+            // Update watermark settings
+            document.body.dataset.watermark = this.settings.showWatermark ? 'true' : 'false';
+            document.documentElement.style.setProperty('--pfox-watermark-text', `"${this.settings.watermarkText}"`);
+            
             styleElement.textContent = `:root { --pfox-radius-multiplier: ${boundedValue}; }`;
 
             // Update settings if the value changed after validation
