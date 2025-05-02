@@ -1,7 +1,7 @@
 :root {
     /* Base variables */
-    --pfox-radius-multiplier: 1;
-    --pfox-watermark-text: "";
+    --pfox-radius-multiplier: var(--pfox-radius-attr, 1);
+    --pfox-watermark-text: var(--pfox-watermark-attr, "");
     
     /* Radius scales - calculated dynamically */
     --pfox-radius-s: calc(4px * var(--pfox-radius-multiplier));
@@ -11,6 +11,12 @@
     --pfox-radius-xxl: calc(24px * var(--pfox-radius-multiplier));
     --pfox-radius-xxxl: calc(32px * var(--pfox-radius-multiplier));
     --pfox-system-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Set custom properties based on data attributes */
+html {
+    --pfox-radius-attr: attr(data-pfox-radius);
+    --pfox-watermark-attr: attr(data-pfox-watermark string);
 }
 
 /* Watermark styles */
@@ -66,6 +72,8 @@ img {
     border-radius: var(--pfox-radius-xl);
     float: none;
 }
+
+
 
 img[alt*="left"] {
     float: left;
@@ -236,6 +244,7 @@ tbody tr:first-child {
     border-bottom: 2px dashed var(--text-muted);
     border-top: 2px dashed var(--text-muted);
     background-color: var(--background-secondary);
+    
 }
 
 .line-break {
@@ -290,12 +299,12 @@ tbody tr:first-child {
 
 /* Enhanced Table of Contents Styles */
 .purple-fox-toc {
+    display: block;
+    break-before: auto;
     background-color: var(--background-primary);
     border: 2px solid var(--background-modifier-border);
     border-radius: var(--pfox-radius-xl);
     padding: 2em;
-    margin: 1em auto;
-    position: relative;
     font-size: 1.1em;
 }
 
@@ -368,5 +377,15 @@ tbody tr:first-child {
     
     .purple-fox-toc li {
         break-inside: avoid;
+    }
+
+    .page-break, .line-break {
+        /* width: 0; */
+        height: 0;
+        opacity: 0;
+    }
+
+    .page-break {
+        page-break-after: always;
     }
 }

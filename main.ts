@@ -85,9 +85,9 @@ export default class PurpleFoxPlugin extends Plugin {
             // Round to one decimal place and bound between 0 and 1.5
             const boundedValue = Math.min(Math.max(Math.round(currentValue * 10) / 10, 0), 1.5);
             
-            // Update CSS custom properties using documentElement
-            document.documentElement.style.setProperty('--pfox-radius-multiplier', boundedValue.toString());
-            document.documentElement.style.setProperty('--pfox-watermark-text', `"${this.settings.watermarkText}"`);
+            // Update data attributes on document root
+            document.documentElement.dataset.pfoxRadius = boundedValue.toString();
+            document.documentElement.dataset.pfoxWatermark = this.settings.watermarkText;
             document.body.dataset.watermark = this.settings.showWatermark ? 'true' : 'false';
 
             // Update settings if the value changed after validation
