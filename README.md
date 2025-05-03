@@ -13,6 +13,7 @@ Purple Fox Notes comes with several beautifully styled custom callouts:
 - `definition` - For defining terms and concepts with a book-open icon 📖
 - `recall` - For memory aids and review points with a file-clock icon 🕒
 - `theorem` - For stating important theorems with a book icon 📚
+- `lemma` - For supporting statements used in proofs with a bookmark icon 🔖
 
 Example usage:
 ```md
@@ -30,6 +31,9 @@ Example usage:
 
 > [!theorem]
 > State your theorem here
+
+> [!lemma]
+> State your lemma here
 ```
 
 ![Callouts Example](./docs/screenshots/callouts-example.png)
@@ -112,20 +116,10 @@ Note: When using aligned images, always insert a line break after the image, wit
 ![Combining Options Example](./docs/screenshots/combining.png)
 
 ### Additional Style Enhancements
-- Customizable border radius for UI elements
 - Beautiful table styling with centered content and rounded corners
 - Responsive and clean design for both light and dark themes
 - Enhanced callout styling with smooth borders and elegant backgrounds
 
-## Settings
-
-The plugin settings allow you to customize:
-
-- **Break Settings**
-  - Toggle visibility of page break ribbon icon
-  - Toggle visibility of line break ribbon icon
-- **Border Radius Settings**
-  - Adjust the size of all border radiuses (0 = no radius, 1 = default, 1.5 = maximum)
 
 ## License
 

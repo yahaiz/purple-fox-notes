@@ -73,31 +73,7 @@ export default class PurpleFoxPlugin extends Plugin {
     }
 
     private updateStyles() {
-        try {
-            // Get current value and validate it
-            let currentValue = this.settings.radiusMultiplier;
-            if (typeof currentValue !== 'number' || isNaN(currentValue)) {
-                currentValue = DEFAULT_SETTINGS.radiusMultiplier;
-                this.settings.radiusMultiplier = currentValue;
-                this.saveSettings();
-            }
-
-            // Round to one decimal place and bound between 0 and 1.5
-            const boundedValue = Math.min(Math.max(Math.round(currentValue * 10) / 10, 0), 1.5);
-            
-            // Update data attributes on document root
-            document.documentElement.dataset.pfoxRadius = boundedValue.toString();
-            document.documentElement.dataset.pfoxWatermark = this.settings.watermarkText;
-            document.body.dataset.watermark = this.settings.showWatermark ? 'true' : 'false';
-
-            // Update settings if the value changed after validation
-            if (boundedValue !== this.settings.radiusMultiplier) {
-                this.settings.radiusMultiplier = boundedValue;
-                this.saveSettings();
-            }
-        } catch (error) {
-            console.error('Error updating styles:', error);
-        }
+        // Method kept empty for future style updates
     }
 
     private setupCalloutProcessor() {
@@ -137,22 +113,20 @@ export default class PurpleFoxPlugin extends Plugin {
                 this.lineBreakIcon = null;
             }
 
-            // Add icons if enabled
-            if (this.settings.showAllBreakIcons) {
-                this.pageBreakIcon = this.addRibbonIcon('lucide-file-plus', 'Insert Page Break', async () => {
-                    const maybeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-                    if (maybeView?.editor) {
-                        maybeView.editor.replaceSelection('\n<div class="page-break"></div>\n\n');
-                    }
-                });
+            // Always add break icons
+            this.pageBreakIcon = this.addRibbonIcon('lucide-file-plus', 'Insert Page Break', async () => {
+                const maybeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+                if (maybeView?.editor) {
+                    maybeView.editor.replaceSelection('\n<div class="page-break"></div>\n\n');
+                }
+            });
 
-                this.lineBreakIcon = this.addRibbonIcon('lucide-minus', 'Insert Line Break', async () => {
-                    const maybeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-                    if (maybeView?.editor) {
-                        maybeView.editor.replaceSelection('\n<div class="line-break"></div>\n\n');
-                    }
-                });
-            }
+            this.lineBreakIcon = this.addRibbonIcon('lucide-minus', 'Insert Line Break', async () => {
+                const maybeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+                if (maybeView?.editor) {
+                    maybeView.editor.replaceSelection('\n<div class="line-break"></div>\n\n');
+                }
+            });
 
             // Add TOC icon
             this.addRibbonIcon('list', 'Insert Table of Contents', async () => {
@@ -176,6 +150,5 @@ export default class PurpleFoxPlugin extends Plugin {
     async saveSettings() {
         await this.saveData(this.settings);
         this.updateRibbonIcon();
-        this.updateStyles();
     }
 }
